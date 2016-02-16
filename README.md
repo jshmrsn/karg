@@ -47,7 +47,7 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
 }
 
 fun main(args: Array<String>) {
-    val exampleArguments = parseArguments(args, { ExampleArguments(it) })
+    val exampleArguments = parseArguments(args, ::ExampleArguments)
 
     // textToPrint is not optional, so null check is not needed
     var output = exampleArguments.textToPrint

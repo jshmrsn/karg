@@ -71,7 +71,7 @@ class Demo {
 
             )
 
-            val arguments = parseArguments(argumentsArray, { DemoArguments(it) })
+            val arguments = parseArguments(argumentsArray, ::DemoArguments)
 
             Assert.assertEquals("value", arguments.concise)
 
@@ -141,7 +141,7 @@ A demo of Karg's usage.
         run {
             // inspectArguments returns an instance of InspectionArguments, which is a structured representation
             // of the argument's command line API. Internally, InspectionArguments is used to generate help text
-            val inspectionArguments = inspectArguments { DemoArguments(it) }
+            val inspectionArguments = inspectArguments(::DemoArguments)
 
             Assert.assertEquals(8, inspectionArguments.arguments.size)
 
