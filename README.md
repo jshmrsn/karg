@@ -8,7 +8,7 @@ Karg
 
 Why?
 ==============
-There's many existing argument parsers built for Java, but none of them can take full advantage of Kotlin's language features. For example, Karg integrates the optionality of command line parameters with Kotlin's null safety.
+There's many existing argument parsers built for Java, but none of them can take full advantage of Kotlin's language features. For example, Karg integrates the optionality of command line parameters with Kotlin's compile-time nullability checks.
 
 Early preview status
 ==============
@@ -82,7 +82,7 @@ fun main(args: Array<String>) {
 
 Features
 ==============
-- Compile-tyime type safety
+- Compile-time type safety
 - Optionality integrated with Kotlin's compile-time nullability
 - Parameters
 - Flags
