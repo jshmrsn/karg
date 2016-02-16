@@ -5,6 +5,8 @@ package com.jshmrsn.karg
 class ExampleArguments(raw: RawArguments) : Arguments(raw,
                 name = "example",
                 description = "An example of Karg's usage.") {
+
+    // Parameter/field values can be non-null and val (not var) since they are initialized at construction
     val textToPrint = parameter(
             name = "text-to-print",
             aliasNames = listOf("text"),
@@ -12,6 +14,7 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
             description = "Print this text."
     )
 
+    // Argument values are forced to be nullable when the argument is optional (and no default is provided)
     val textToPrintAfter = optionalParameter(
             name = "text-to-print-after",
             description = "If provided, print this text after the primary text."
@@ -23,6 +26,7 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
             default = false
     )
 
+    // Positional arguments must be defined after all other arguments (but can be provided in any order on the command line)
     val moreTextToPrint = positionalArguments(name = "more-text")
 }
 

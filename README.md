@@ -45,6 +45,7 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
             default = false
     )
 
+    // Positional arguments must be defined after all other arguments (but can be provided in any order on the command line)
     val moreTextToPrint = positionalArguments(name = "more-text")
 }
 
