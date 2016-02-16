@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
         output += "\n" + exampleArguments.textToPrintAfter
     }
 
-    // shouldShould is optional, but has a default value, so null check is not needed
+    // shouldShout is optional, but has a default value, so null check is not needed
     if (exampleArguments.shouldShout) {
         output = output.toUpperCase()
     }
