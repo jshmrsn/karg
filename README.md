@@ -16,7 +16,7 @@ I am putting this up on GitHub in its early state to measure if there's interest
 
 Example usage
 ==============
-[**View demo test**](https://github.com/jshmrsn/karg/blob/master/src/test/java/com/jshmrsn/karg/Demo.kt)
+For additional usage examples, please [**view the tests**](https://github.com/jshmrsn/karg/tree/master/src/test/java/com/jshmrsn/karg).
 
 ```kotlin
 class ExampleArguments(raw: RawArguments) : Arguments(raw,
@@ -76,6 +76,7 @@ fun main(args: Array<String>) {
 --text Hello --shout
 
     HELLO
+
 
 Features
 ==============
