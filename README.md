@@ -4,6 +4,8 @@ Karg
 - Leverages Kotlin's language features to provide strong type and null safety.
 - No use of reflection or annotations.
 
+[![Circle CI](https://circleci.com/gh/jshmrsn/karg.svg?style=svg)](https://circleci.com/gh/jshmrsn/karg)
+
 Why?
 ==============
 There's many existing argument parsers built for Java, but none of them can take full advantage of Kotlin's language features. For example, Karg integrates the optionality of command line parameters with Kotlin's null safety.
@@ -31,7 +33,7 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
 
     val textToPrintAfter = optionalParameter(
             name = "text-to-print-after",
-            description = "If provided, print this text after primary text."
+            description = "If provided, print this text after the primary text."
     )
 
     val shouldShout = optionalFlag(
