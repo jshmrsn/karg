@@ -99,14 +99,13 @@ Features
 - Argument values are forced to be nullable when the argument is optional (and no default is provided)
 - Parameters
 - Flags
-- Positional parameters
+- Positional arguments
 - Help text generation
 - Structured runtime inspection
 
 Known Missing features
 ==============
 - Parameter types other than String (currently, you have to convert Strings to numbers yourself)
-- Help information and requirements for positional parameters
 - Sub-commands (as in `git pull` vs `git checkout`)
 - Override of default --help argument
 - Custom terminating arguments other than --help (e.g. implement --version and not require non-optional arguments)
