@@ -16,12 +16,12 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
 
     val textToPrintAfter = optionalParameter(
             name = "text-to-print-after",
-            description = "If provided, print this text after primary text."
+            description = "If provided, print this text after the primary text."
     )
 
     val shouldShout = optionalFlag(
             name = "shout",
-            description = "Print in all uppercase with.",
+            description = "Print in all uppercase.",
             default = false
     )
 }

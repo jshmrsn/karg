@@ -69,9 +69,9 @@ fun main(args: Array<String>) {
       --text-to-print | --text | -t <value>
         Print this text.
       [--text-to-print-after] <value>
-        If provided, print this text after primary text.
+        If provided, print this text after the primary text.
       [--shout]
-        Print in all uppercase with.
+        Print in all uppercase.
 
 --text Hello --shout
 
