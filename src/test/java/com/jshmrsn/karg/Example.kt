@@ -50,5 +50,7 @@ class Example {
     fun example() {
         val helpText = inspectArguments { ExampleArguments(it) }.generateHelpText()
         println(helpText)
+
+        main(arrayOf("--text", "Hello", "--shout"))
     }
 }

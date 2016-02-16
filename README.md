@@ -10,19 +10,9 @@ There's many existing argument parsers built for Java, but none of them can take
 
 Early preview status
 ==============
-I started building Karg for my own use cases because I wasn't satisfied with using argument parsers built for Java. Thus, Karg has only been used in a few places so far, and likely lacks many features important to people other than myself. For example, Karg does not explicitly support sub-commands with separate parameter configurations (as in ```git pull``` vs ```git checkout```). I also haven't setup proper distribution for Maven, Gradle, etc..
+I recently built Karg for my own use cases because I wasn't satisfied with using argument parsers built for Java. Thus, Karg has only been used in a few places so far, and likely lacks many features important to people other than myself. For example, Karg does not explicitly support sub-commands with separate parameter configurations (as in ```git pull``` vs ```git checkout```). I also haven't setup proper distribution for Maven, Gradle, etc..
 
 I am putting this up on GitHub in its early state to measure if there's interest in using something like Karg over other Java argument parsers. If there is, I would love to get feedback on Karg's APIs, etc.. Pull requests welcomed!
-
-Features
-==============
-- Compile-tyime type safety
-- Optionality integrated with Kotlin's compile-time nullability
-- Parameters
-- Flags
-- Positional parameters
-- Help text generation
-- Structured runtime inspection
 
 Example usage
 ==============
@@ -71,7 +61,8 @@ fun main(args: Array<String>) {
 }
 ```
 
-Passing --help will print the following:
+--help
+
     example
     An example of Karg's usage.
 
@@ -81,3 +72,25 @@ Passing --help will print the following:
         If provided, print this text after primary text.
       [--shout]
         Print in all uppercase with.
+
+--text Hello --shout
+
+    HELLO
+
+Features
+==============
+- Compile-tyime type safety
+- Optionality integrated with Kotlin's compile-time nullability
+- Parameters
+- Flags
+- Positional parameters
+- Help text generation
+- Structured runtime inspection
+
+Known Missing features
+==============
+- Paramater types other than String (currently, you have to convert Strings to numbers yourself)
+- Help information and requirements for positional parameters
+- Sub-commands (as in `git pull` vs `git checkout`)
+- Override of default --help argument
+- Custom terminating arguments other than --help (e.g. implement --version and not require non-optional arguments)
