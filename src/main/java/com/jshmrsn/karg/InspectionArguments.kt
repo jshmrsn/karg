@@ -19,7 +19,8 @@ class InspectionArgument(
 class InspectionArguments(
         val arguments: List<InspectionArgument>,
         val name: String = "",
-        val description: String = ""
+        val description: String = "",
+        val positionalArguments: InspectionPositionalArguments?
 ) {
     fun generateHelpText(): String {
         var helpString = ""
@@ -65,6 +66,34 @@ class InspectionArguments(
             }
         }
 
+        val positionalArgumentsConfig = this.positionalArguments
+
+        if (positionalArgumentsConfig != null) {
+            helpString += "\n"
+            helpString += "$tab<${positionalArgumentsConfig.name}>..."
+
+            if (positionalArgumentsConfig.minCount != null) {
+                helpString += " (min ${positionalArgumentsConfig.minCount})"
+            }
+
+            if (positionalArgumentsConfig.maxCount != null) {
+                helpString += " (max ${positionalArgumentsConfig.maxCount})"
+            }
+
+            helpString += "\n"
+
+            if (!positionalArgumentsConfig.description.isEmpty()) {
+                helpString += "$tab$tab${positionalArgumentsConfig.description}\n"
+            }
+        }
+
         return helpString
     }
 }
+
+class InspectionPositionalArguments(
+        val name: String,
+        val description: String,
+        val minCount: Int?,
+        val maxCount: Int?
+)

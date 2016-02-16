@@ -1,6 +1,5 @@
 package com.jshmrsn.karg
 
-import com.jshmrsn.karg.RawArguments
 import org.junit.Assert
 
 private class DemoArguments(rawArguments: RawArguments) :
@@ -51,6 +50,13 @@ private class DemoArguments(rawArguments: RawArguments) :
             name = "optional-param-with-default",
             description = "An optional flag with a default value",
             default = false
+    )
+
+    val positionalArguments = this.positionalArguments(
+            name = "positional-arguments",
+            description = "Positional argument definitions must come after all other argument definitions.",
+            minCount = 0,
+            maxCount = 3
     )
 }
 
@@ -121,6 +127,9 @@ A demo of Karg's usage.
     An optional flag.
   [--optional-param-with-default]
     An optional flag with a default value
+
+  <positional-arguments>... (min 0) (max 3)
+    Positional argument definitions must come after all other argument definitions.
 """
 
             parseArguments(argumentsArray, { DemoArguments(it) }, printHelpCallback = { generatedHelpText ->

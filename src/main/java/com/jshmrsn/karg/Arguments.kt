@@ -9,11 +9,47 @@ abstract class Arguments(rawArguments: RawArguments,
                          val description: String = "") {
     private val parser = ArgumentsParser(rawArguments)
 
-    val positionalArguments: List<String> get() = this.parser.positionalArguments
+    private var inspectionPositionalArguments: InspectionPositionalArguments? = null
+
+    private fun validatePositionalArgumentsNotParsed() {
+        if (this.inspectionPositionalArguments != null) {
+            throw InvalidArgumentDefinitionException("Additional arguments cannot be defined after positional arguments are defined. Please place your positional arguments property initialization below all other argument definitions.")
+        }
+    }
+
+    protected fun positionalArguments(name: String, description: String = "", minCount: Int? = null, maxCount: Int? = null): List<String> {
+        if (this.inspectionPositionalArguments != null)
+            throw InvalidArgumentDefinitionException("Positional arguments must not be configured more than once")
+
+        this.inspectionPositionalArguments = InspectionPositionalArguments(name, description, minCount, maxCount)
+
+        if (this.parser.isForInspection) {
+            return listOf()
+        }
+
+        val positionalArguments = this.parser.parsePositionalArguments()
+
+        val positionalArgumentsCount = positionalArguments.size
+
+        if (maxCount != null) {
+            if (positionalArgumentsCount > maxCount)
+                throw Exception("Too many positional arguments provided. Provided $positionalArgumentsCount, expected no more than ${maxCount}")
+        }
+
+        if (minCount != null) {
+            if (positionalArgumentsCount < minCount)
+                throw Exception("Too few positional arguments provided. Provided $positionalArgumentsCount, expected no fewer than ${maxCount}")
+        }
+
+        return positionalArguments
+    }
 
     private val inspectionArguments = mutableListOf<InspectionArgument>()
 
-    fun multiParameter(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = ""): List<String> {
+
+    protected fun multiParameter(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = ""): List<String> {
+        validatePositionalArgumentsNotParsed()
+
         this.inspectionArguments.add(InspectionArgument(
                 type = InspectionArgumentType.MultiParameter,
                 name = name,
@@ -33,6 +69,8 @@ abstract class Arguments(rawArguments: RawArguments,
     }
 
     protected fun parameter(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = ""): String {
+        validatePositionalArgumentsNotParsed()
+
         this.inspectionArguments.add(InspectionArgument(
                 type = InspectionArgumentType.Parameter,
                 name = name,
@@ -57,6 +95,8 @@ abstract class Arguments(rawArguments: RawArguments,
     }
 
     protected fun optionalParameter(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = ""): String? {
+        validatePositionalArgumentsNotParsed()
+
         this.inspectionArguments.add(InspectionArgument(
                 type = InspectionArgumentType.Parameter,
                 name = name,
@@ -76,6 +116,8 @@ abstract class Arguments(rawArguments: RawArguments,
     }
 
     protected fun optionalParameter(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = "", default: String): String {
+        validatePositionalArgumentsNotParsed()
+
         this.inspectionArguments.add(InspectionArgument(
                 type = InspectionArgumentType.Parameter,
                 name = name,
@@ -97,6 +139,8 @@ abstract class Arguments(rawArguments: RawArguments,
 
 
     protected fun flag(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = ""): Boolean {
+        validatePositionalArgumentsNotParsed()
+
         this.inspectionArguments.add(InspectionArgument(
                 type = InspectionArgumentType.Flag,
                 name = name,
@@ -121,6 +165,8 @@ abstract class Arguments(rawArguments: RawArguments,
     }
 
     protected fun optionalFlag(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = ""): Boolean? {
+        validatePositionalArgumentsNotParsed()
+
         this.inspectionArguments.add(InspectionArgument(
                 type = InspectionArgumentType.Flag,
                 name = name,
@@ -140,6 +186,8 @@ abstract class Arguments(rawArguments: RawArguments,
     }
 
     protected fun optionalFlag(name: String, aliasNames: List<String> = listOf(), shortNames: List<Char> = listOf(), description: String = "", default: Boolean): Boolean {
+        validatePositionalArgumentsNotParsed()
+
         this.inspectionArguments.add(InspectionArgument(
                 type = InspectionArgumentType.Flag,
                 name = name,
@@ -174,11 +222,13 @@ abstract class Arguments(rawArguments: RawArguments,
         return InspectionArguments(
                 name = this.name,
                 description = this.description,
-                arguments = this.inspectionArguments.toList()
+                arguments = this.inspectionArguments.toList(),
+                positionalArguments = this.inspectionPositionalArguments
         )
     }
 
     open fun validate() {
     }
 }
+
 

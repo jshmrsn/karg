@@ -81,8 +81,6 @@ internal class ArgumentsParser(rawArguments: RawArguments) {
         }
     }
 
-    lateinit var positionalArguments: List<String>
-
     fun parseFlag(name: String, namesToCheck: List<String>, shortNamesToCheck: List<Char>): Boolean? {
         var result: Boolean? = null
 
@@ -160,12 +158,22 @@ internal class ArgumentsParser(rawArguments: RawArguments) {
         return results.firstOrNull()
     }
 
-    fun finalize() {
-        if (this.isForInspection) {
-            this.positionalArguments = listOf()
-        } else {
-            val positionalArguments = arrayListOf<String>()
+    fun parsePositionalArguments(): List<String> {
+        val positionalArguments = arrayListOf<String>()
 
+        this.argumentTokens.forEach { token ->
+            if (token is ValueArgumentToken) {
+                if (!token.isClaimed) {
+                    positionalArguments.add(token.claim())
+                }
+            }
+        }
+
+        return positionalArguments
+    }
+
+    fun finalize() {
+        if (!this.isForInspection) {
             this.argumentTokens.forEach { token ->
                 if (token is NameArgumentToken) {
                     if (!token.isClaimed) {
@@ -179,12 +187,10 @@ internal class ArgumentsParser(rawArguments: RawArguments) {
                     }
                 } else if (token is ValueArgumentToken) {
                     if (!token.isClaimed) {
-                        positionalArguments.add(token.value)
+                        throw InvalidArgumentsException("Unclaimed argument value: " + token.value)
                     }
                 }
             }
-
-            this.positionalArguments = positionalArguments
         }
     }
 }
