@@ -2,7 +2,7 @@ Karg
 ==============
 - A command line argument parser built specifically for Kotlin.
 - Leverages Kotlin's language features to provide strong type and null safety.
-- No use of reflection or annotations.
+- No use of reflection or annotations. No dependencies.
 
 [![Circle CI](https://circleci.com/gh/jshmrsn/karg.svg?style=svg)](https://circleci.com/gh/jshmrsn/karg)
 
@@ -24,6 +24,8 @@ For additional usage examples, please [**view the tests**](https://github.com/js
 class ExampleArguments(raw: RawArguments) : Arguments(raw,
                 name = "example",
                 description = "An example of Karg's usage.") {
+
+    // Parameter/field values can be non-null and val (not var) since they are initialized at construction
     val textToPrint = parameter(
             name = "text-to-print",
             aliasNames = listOf("text"),
@@ -31,6 +33,7 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
             description = "Print this text."
     )
 
+    // Argument values are forced to be nullable when the argument is optional (and no default is provided)
     val textToPrintAfter = optionalParameter(
             name = "text-to-print-after",
             description = "If provided, print this text after the primary text."
@@ -83,7 +86,8 @@ fun main(args: Array<String>) {
 Features
 ==============
 - Compile-time type safety
-- Optionality integrated with Kotlin's compile-time nullability
+- Arguments values can be non-null and val (not var) since they are initialized at construction
+- Argument values are forced to be nullable when the argument is optional (and no default is provided)
 - Parameters
 - Flags
 - Positional parameters
@@ -92,7 +96,7 @@ Features
 
 Known Missing features
 ==============
-- Paramater types other than String (currently, you have to convert Strings to numbers yourself)
+- Parameter types other than String (currently, you have to convert Strings to numbers yourself)
 - Help information and requirements for positional parameters
 - Sub-commands (as in `git pull` vs `git checkout`)
 - Override of default --help argument
