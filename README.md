@@ -44,6 +44,8 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
             description = "Print in all uppercase.",
             default = false
     )
+
+    val moreTextToPrint = positionalArguments(name = "more-text")
 }
 
 fun main(args: Array<String>) {
@@ -51,6 +53,10 @@ fun main(args: Array<String>) {
 
     // textToPrint is not optional, so null check is not needed
     var output = exampleArguments.textToPrint
+
+    exampleArguments.moreTextToPrint.forEach { moreTextToPrintEntry ->
+        output += " " + moreTextToPrintEntry
+    }
 
     // textToPrintAfter is optional, so compiler forces a null check
     if (exampleArguments.textToPrintAfter != null) {
@@ -78,9 +84,11 @@ fun main(args: Array<String>) {
       [--shout]
         Print in all uppercase.
 
---text Hello --shout
+      <more-text>...
 
-    HELLO
+--text Hello --shout more text
+
+    HELLO MORE TEXT
 
 
 Features
