@@ -1,6 +1,5 @@
 package com.jshmrsn.karg
 
-import com.jshmrsn.karg.internal.RawArguments
 import org.junit.Assert.*
 
 class Tests {

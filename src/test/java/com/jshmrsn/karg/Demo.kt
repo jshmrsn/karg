@@ -1,6 +1,6 @@
 package com.jshmrsn.karg
 
-import com.jshmrsn.karg.internal.RawArguments
+import com.jshmrsn.karg.RawArguments
 import org.junit.Assert
 
 private class DemoArguments(rawArguments: RawArguments) :

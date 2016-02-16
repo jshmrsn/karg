@@ -1,8 +1,8 @@
 package com.jshmrsn.karg.internal
 
 import com.jshmrsn.karg.InvalidArgumentsException
+import com.jshmrsn.karg.RawArguments
 
-interface RawArguments
 
 internal interface ArgumentToken
 

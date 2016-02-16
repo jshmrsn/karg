@@ -1,7 +1,5 @@
 package com.jshmrsn.karg
 
-import com.jshmrsn.karg.internal.RawArguments
-
 // This file exists to help write the README. Not a real main function.
 
 class ExampleArguments(raw: RawArguments) : Arguments(raw,

@@ -2,6 +2,8 @@ package com.jshmrsn.karg
 
 import com.jshmrsn.karg.internal.*
 
+interface RawArguments
+
 abstract class Arguments(rawArguments: RawArguments,
                          val name: String = "",
                          val description: String = "") {
