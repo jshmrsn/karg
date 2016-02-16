@@ -36,7 +36,7 @@ class ExampleArguments(raw: RawArguments) : Arguments(raw,
 
     val shouldShout = optionalFlag(
             name = "shout",
-            description = "Print in all uppercase with.",
+            description = "Print in all uppercase.",
             default = false
     )
 }
