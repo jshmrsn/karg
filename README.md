@@ -103,7 +103,7 @@ Features
 - Help text generation
 - Structured runtime inspection
 
-Known Missing features
+Known missing features
 ==============
 - Parameter types other than String (currently, you have to convert Strings to numbers yourself)
 - Sub-commands (as in `git pull` vs `git checkout`)
