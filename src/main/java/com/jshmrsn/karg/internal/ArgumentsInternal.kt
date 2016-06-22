@@ -50,25 +50,41 @@ internal class NameArgumentToken(val name: String) : ArgumentToken {
 internal class RawArgumentsImplementation(val rawArguments: List<String>) : RawArguments
 internal class RawArgumentsForInspectionImplementation() : RawArguments
 
-internal class ArgumentsParser(rawArguments: RawArguments) {
+internal class ArgumentsParser(rawArguments: RawArguments,
+                               positionalUntilSeparator: Boolean = false) {
     val isForHelp: Boolean
     val isForInspection: Boolean
 
     private val argumentTokens: List<ArgumentToken>
+    private val postSeparatorStrings: List<String>
 
     init {
         if (rawArguments is RawArgumentsImplementation) {
-            this.argumentTokens = rawArguments.rawArguments.map { rawArgument ->
-                if (rawArgument.startsWith("--")) {
+            val argumentTokens = mutableListOf<ArgumentToken>()
+            val postSeparatorStrings = mutableListOf<String>()
+            var hasReachedSeparator = false
+            var defaultPositional = positionalUntilSeparator
+
+            rawArguments.rawArguments.forEach { rawArgument ->
+                if (rawArgument == "---") {
+                    defaultPositional = !defaultPositional
+                } else if (hasReachedSeparator || defaultPositional) {
+                    postSeparatorStrings.add(rawArgument)
+                } else if (rawArgument == "--") {
+                    hasReachedSeparator = true
+                } else if (rawArgument.startsWith("--")) {
                     val name = rawArgument.substring(2)
-                    NameArgumentToken(name)
+                    argumentTokens.add(NameArgumentToken(name))
                 } else if (rawArgument.startsWith("-")) {
                     val shortNames = rawArgument.substring(1).toList()
-                    ShortNameArgumentToken(shortNames)
+                    argumentTokens.add(ShortNameArgumentToken(shortNames))
                 } else {
-                    ValueArgumentToken(rawArgument)
+                    argumentTokens.add(ValueArgumentToken(rawArgument))
                 }
             }
+
+            this.argumentTokens = argumentTokens
+            this.postSeparatorStrings = postSeparatorStrings
 
             this.isForHelp = parseFlag("help", namesToCheck = listOf("help"), shortNamesToCheck = listOf('h')) == true
             this.isForInspection = this.isForHelp
@@ -76,6 +92,7 @@ internal class ArgumentsParser(rawArguments: RawArguments) {
             this.isForHelp = false
             this.isForInspection = true
             this.argumentTokens = listOf()
+            this.postSeparatorStrings = listOf()
         } else {
             throw InvalidArgumentsException("Provided raw arguments should always be obtained through a call to parseArguments or inspectArguments")
         }
@@ -117,7 +134,7 @@ internal class ArgumentsParser(rawArguments: RawArguments) {
     fun parseMultiParameter(name: String, namesToCheck: List<String>, shortNamesToCheck: List<Char>): List<String> {
         var tokenIndex = 0
 
-        var result = mutableListOf<String>()
+        val result = mutableListOf<String>()
 
         while (tokenIndex < this.argumentTokens.size) {
             val token = this.argumentTokens[tokenIndex]
@@ -150,7 +167,7 @@ internal class ArgumentsParser(rawArguments: RawArguments) {
     }
 
     fun parseParameter(name: String, namesToCheck: List<String>, shortNamesToCheck: List<Char>): String? {
-        var results = this.parseMultiParameter(name, namesToCheck, shortNamesToCheck)
+        val results = this.parseMultiParameter(name, namesToCheck, shortNamesToCheck)
 
         if (results.size > 1)
             throw InvalidArgumentsException("Multiple values provided for parameter: " + name)
@@ -169,7 +186,7 @@ internal class ArgumentsParser(rawArguments: RawArguments) {
             }
         }
 
-        return positionalArguments
+        return positionalArguments + this.postSeparatorStrings
     }
 
     fun finalize() {

@@ -6,8 +6,9 @@ interface RawArguments
 
 abstract class Arguments(rawArguments: RawArguments,
                          val name: String = "",
-                         val description: String = "") {
-    private val parser = ArgumentsParser(rawArguments)
+                         val description: String = "",
+                         positionalUntilSeparator: Boolean = false) {
+    private val parser = ArgumentsParser(rawArguments, positionalUntilSeparator)
 
     private var inspectionPositionalArguments: InspectionPositionalArguments? = null
 
@@ -17,7 +18,7 @@ abstract class Arguments(rawArguments: RawArguments,
         }
     }
 
-    protected fun positionalArguments(name: String, description: String = "", minCount: Int? = null, maxCount: Int? = null): List<String> {
+    protected fun positionalArguments(name: String = "", description: String = "", minCount: Int? = null, maxCount: Int? = null): List<String> {
         if (this.inspectionPositionalArguments != null)
             throw InvalidArgumentDefinitionException("Positional arguments must not be configured more than once")
 
