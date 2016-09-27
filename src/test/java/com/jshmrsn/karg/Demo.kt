@@ -3,60 +3,60 @@ package com.jshmrsn.karg
 import org.junit.Assert
 
 private class DemoArguments(rawArguments: RawArguments) :
-      Arguments(rawArguments,
-            name = "demo",
-            description = "A demo of Karg's usage.") {
+     Arguments(rawArguments,
+          name = "demo",
+          description = "A demo of Karg's usage.") {
    val concise = parameter("concise", description = "A simple parameter without any bells or whistles.")
 
    val parameter: String = parameter(
-         name = "param",
-         aliasNames = listOf("param-alias"),
-         shortNames = listOf('p', 'a'),
-         description = "A required parameter. Since this parameter is not optional, the Kotlin property type can be non-nullable. An exception is thrown if this parameter is not provided."
+        name = "param",
+        aliasNames = listOf("param-alias"),
+        shortNames = listOf('p', 'a'),
+        description = "A required parameter. Since this parameter is not optional, the Kotlin property type can be non-nullable. An exception is thrown if this parameter is not provided."
    )
 
    val optionalParameter: String? = optionalParameter(
-         name = "optional-param",
-         shortNames = listOf('o'),
-         description = "An optional parameter. Since this parameter is optional and no default value is provided, the Kotlin property type must be nullable. If this parameter is not provided, the property value will be null."
+        name = "optional-param",
+        shortNames = listOf('o'),
+        description = "An optional parameter. Since this parameter is optional and no default value is provided, the Kotlin property type must be nullable. If this parameter is not provided, the property value will be null."
    )
 
    val optionalParameterWithDefault: String = optionalParameter(
-         name = "optional-param-with-default",
-         shortNames = listOf('d'),
-         description = "An optional parameter with a default value. Although this property is optional, it has a default value, so the Kotlin property type can be non-nullable.",
-         default = "default value"
+        name = "optional-param-with-default",
+        shortNames = listOf('d'),
+        description = "An optional parameter with a default value. Although this property is optional, it has a default value, so the Kotlin property type can be non-nullable.",
+        default = "default value"
    )
 
    val multiParameter: List<String> = multiParameter(
-         name = "multi-parameter",
-         shortNames = listOf('m'),
-         description = "A parameter which can be provided multiple times, building a list of values.")
+        name = "multi-parameter",
+        shortNames = listOf('m'),
+        description = "A parameter which can be provided multiple times, building a list of values.")
 
    val flag: Boolean = flag(
-         name = "flag",
-         aliasNames = listOf("flag-alias"),
-         shortNames = listOf('f', 'l'),
-         description = "A required flag"
+        name = "flag",
+        aliasNames = listOf("flag-alias"),
+        shortNames = listOf('f', 'l'),
+        description = "A required flag"
    )
 
    val optionalFlag: Boolean? = optionalFlag(
-         name = "optional-flag",
-         shortNames = listOf('o'),
-         description = "An optional flag."
+        name = "optional-flag",
+        shortNames = listOf('o'),
+        description = "An optional flag."
    )
 
    val optionalFlagWithDefault: Boolean = optionalFlag(
-         name = "optional-param-with-default",
-         description = "An optional flag with a default value",
-         default = false
+        name = "optional-param-with-default",
+        description = "An optional flag with a default value",
+        default = false
    )
 
    val positionalArguments = this.positionalArguments(
-         name = "positional-arguments",
-         description = "Positional argument definitions must come after all other argument definitions.",
-         minCount = 0,
-         maxCount = 3
+        name = "positional-arguments",
+        description = "Positional argument definitions must come after all other argument definitions.",
+        minCount = 0,
+        maxCount = 3
    )
 }
 
@@ -65,15 +65,15 @@ class Demo {
    fun demo() {
       run {
          val argumentsArray = arrayOf(
-               "--concise", "value",
-               "first positional value", "second positional value",
-               "--param-alias", "value for param via alias",
-               "--optional-param", "value for optional param",
-               "-d", "value for optional param with default via short name",
-               "--flag",
-               "--no-optional-flag",
-               "--multi-parameter", "a", "-m", "b", "-m", "c",
-               "third positional value"
+              "--concise", "value",
+              "first positional value", "second positional value",
+              "--param-alias", "value for param via alias",
+              "--optional-param", "value for optional param",
+              "-d", "value for optional param with default via short name",
+              "--flag",
+              "--no-optional-flag",
+              "--multi-parameter", "a", "-m", "b", "-m", "c",
+              "third positional value"
 
          )
 

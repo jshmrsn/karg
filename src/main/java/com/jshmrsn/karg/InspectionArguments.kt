@@ -7,20 +7,20 @@ enum class InspectionArgumentType {
 }
 
 class InspectionArgument(
-      val name: String,
-      val aliasNames: List<String>,
-      val shortNames: List<Char>,
-      val description: String,
-      val type: InspectionArgumentType,
-      val isOptional: Boolean,
-      val defaultValue: String? = null
+     val name: String,
+     val aliasNames: List<String>,
+     val shortNames: List<Char>,
+     val description: String,
+     val type: InspectionArgumentType,
+     val isOptional: Boolean,
+     val defaultValue: String? = null
 )
 
 class InspectionArguments(
-      val arguments: List<InspectionArgument>,
-      val name: String = "",
-      val description: String = "",
-      val positionalArguments: InspectionPositionalArguments?
+     val arguments: List<InspectionArgument>,
+     val name: String = "",
+     val description: String = "",
+     val positionalArguments: InspectionPositionalArguments?
 ) {
    fun generateHelpText(): String {
       var helpString = ""
@@ -91,8 +91,8 @@ class InspectionArguments(
 }
 
 class InspectionPositionalArguments(
-      val name: String,
-      val description: String,
-      val minCount: Int?,
-      val maxCount: Int?
+     val name: String,
+     val description: String,
+     val minCount: Int?,
+     val maxCount: Int?
 )

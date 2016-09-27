@@ -52,12 +52,12 @@ abstract class Arguments(rawArguments: RawArguments,
       validatePositionalArgumentsNotParsed()
 
       this.inspectionArguments.add(InspectionArgument(
-            type = InspectionArgumentType.MultiParameter,
-            name = name,
-            aliasNames = aliasNames,
-            shortNames = shortNames,
-            isOptional = false,
-            description = description
+           type = InspectionArgumentType.MultiParameter,
+           name = name,
+           aliasNames = aliasNames,
+           shortNames = shortNames,
+           isOptional = false,
+           description = description
       ))
 
       if (this.parser.isForInspection)
@@ -73,12 +73,12 @@ abstract class Arguments(rawArguments: RawArguments,
       validatePositionalArgumentsNotParsed()
 
       this.inspectionArguments.add(InspectionArgument(
-            type = InspectionArgumentType.Parameter,
-            name = name,
-            aliasNames = aliasNames,
-            shortNames = shortNames,
-            isOptional = false,
-            description = description
+           type = InspectionArgumentType.Parameter,
+           name = name,
+           aliasNames = aliasNames,
+           shortNames = shortNames,
+           isOptional = false,
+           description = description
       ))
 
       if (this.parser.isForInspection)
@@ -99,12 +99,12 @@ abstract class Arguments(rawArguments: RawArguments,
       validatePositionalArgumentsNotParsed()
 
       this.inspectionArguments.add(InspectionArgument(
-            type = InspectionArgumentType.Parameter,
-            name = name,
-            aliasNames = aliasNames,
-            shortNames = shortNames,
-            isOptional = true,
-            description = description
+           type = InspectionArgumentType.Parameter,
+           name = name,
+           aliasNames = aliasNames,
+           shortNames = shortNames,
+           isOptional = true,
+           description = description
       ))
 
       if (this.parser.isForInspection)
@@ -120,13 +120,13 @@ abstract class Arguments(rawArguments: RawArguments,
       validatePositionalArgumentsNotParsed()
 
       this.inspectionArguments.add(InspectionArgument(
-            type = InspectionArgumentType.Parameter,
-            name = name,
-            aliasNames = aliasNames,
-            shortNames = shortNames,
-            isOptional = true,
-            description = description,
-            defaultValue = default
+           type = InspectionArgumentType.Parameter,
+           name = name,
+           aliasNames = aliasNames,
+           shortNames = shortNames,
+           isOptional = true,
+           description = description,
+           defaultValue = default
       ))
 
       if (this.parser.isForInspection)
@@ -143,12 +143,12 @@ abstract class Arguments(rawArguments: RawArguments,
       validatePositionalArgumentsNotParsed()
 
       this.inspectionArguments.add(InspectionArgument(
-            type = InspectionArgumentType.Flag,
-            name = name,
-            aliasNames = aliasNames,
-            shortNames = shortNames,
-            isOptional = false,
-            description = description
+           type = InspectionArgumentType.Flag,
+           name = name,
+           aliasNames = aliasNames,
+           shortNames = shortNames,
+           isOptional = false,
+           description = description
       ))
 
       if (this.parser.isForInspection)
@@ -169,12 +169,12 @@ abstract class Arguments(rawArguments: RawArguments,
       validatePositionalArgumentsNotParsed()
 
       this.inspectionArguments.add(InspectionArgument(
-            type = InspectionArgumentType.Flag,
-            name = name,
-            aliasNames = aliasNames,
-            shortNames = shortNames,
-            isOptional = true,
-            description = description
+           type = InspectionArgumentType.Flag,
+           name = name,
+           aliasNames = aliasNames,
+           shortNames = shortNames,
+           isOptional = true,
+           description = description
       ))
 
       if (this.parser.isForInspection)
@@ -190,13 +190,13 @@ abstract class Arguments(rawArguments: RawArguments,
       validatePositionalArgumentsNotParsed()
 
       this.inspectionArguments.add(InspectionArgument(
-            type = InspectionArgumentType.Flag,
-            name = name,
-            aliasNames = aliasNames,
-            shortNames = shortNames,
-            isOptional = true,
-            description = description,
-            defaultValue = default.toString()
+           type = InspectionArgumentType.Flag,
+           name = name,
+           aliasNames = aliasNames,
+           shortNames = shortNames,
+           isOptional = true,
+           description = description,
+           defaultValue = default.toString()
       ))
 
       if (this.parser.isForInspection)
@@ -221,10 +221,10 @@ abstract class Arguments(rawArguments: RawArguments,
 
    internal fun generateInspection(): InspectionArguments {
       return InspectionArguments(
-            name = this.name,
-            description = this.description,
-            arguments = this.inspectionArguments.toList(),
-            positionalArguments = this.inspectionPositionalArguments
+           name = this.name,
+           description = this.description,
+           arguments = this.inspectionArguments.toList(),
+           positionalArguments = this.inspectionPositionalArguments
       )
    }
 
