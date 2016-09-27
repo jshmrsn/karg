@@ -1,99 +1,98 @@
 package com.jshmrsn.karg
 
 enum class InspectionArgumentType {
-    Parameter,
-    MultiParameter,
-    Flag
+   Parameter,
+   MultiParameter,
+   Flag
 }
 
 class InspectionArgument(
-        val name: String,
-        val aliasNames: List<String>,
-        val shortNames: List<Char>,
-        val description: String,
-        val type: InspectionArgumentType,
-        val isOptional: Boolean,
-        val defaultValue: String? = null
+      val name: String,
+      val aliasNames: List<String>,
+      val shortNames: List<Char>,
+      val description: String,
+      val type: InspectionArgumentType,
+      val isOptional: Boolean,
+      val defaultValue: String? = null
 )
 
 class InspectionArguments(
-        val arguments: List<InspectionArgument>,
-        val name: String = "",
-        val description: String = "",
-        val positionalArguments: InspectionPositionalArguments?
+      val arguments: List<InspectionArgument>,
+      val name: String = "",
+      val description: String = "",
+      val positionalArguments: InspectionPositionalArguments?
 ) {
-    fun generateHelpText(): String {
-        var helpString = ""
-        val tab = "  "
+   fun generateHelpText(): String {
+      var helpString = ""
+      val tab = "  "
 
-        if (!this.name.isEmpty()) {
-            helpString += "${this.name}\n"
-        }
+      if (!this.name.isEmpty()) {
+         helpString += "${this.name}\n"
+      }
 
-        if (!this.description.isEmpty())
-            helpString += "${this.description}\n\n"
+      if (!this.description.isEmpty())
+         helpString += "${this.description}\n\n"
 
-        this.arguments.forEach { argument ->
-            helpString += tab
+      this.arguments.forEach { argument ->
+         helpString += tab
 
-            if (argument.isOptional)
-                helpString += "["
+         if (argument.isOptional)
+            helpString += "["
 
-            helpString += "--" + argument.name
+         helpString += "--" + argument.name
 
-            argument.aliasNames.forEach { aliasName ->
-                helpString += " | --" + aliasName
-            }
+         argument.aliasNames.forEach { aliasName ->
+            helpString += " | --" + aliasName
+         }
 
-            argument.shortNames.forEach { shortName ->
-                helpString += " | -" + shortName
-            }
+         argument.shortNames.forEach { shortName ->
+            helpString += " | -" + shortName
+         }
 
-            if (argument.isOptional)
-                helpString += "]"
+         if (argument.isOptional)
+            helpString += "]"
 
-            if (argument.type == InspectionArgumentType.MultiParameter) {
-                helpString += " <value> (repeat parameter for multiple values)"
-            }
-            else if (argument.type == InspectionArgumentType.Parameter) {
-                helpString += " <value>"
-            }
+         if (argument.type == InspectionArgumentType.MultiParameter) {
+            helpString += " <value> (repeat parameter for multiple values)"
+         } else if (argument.type == InspectionArgumentType.Parameter) {
+            helpString += " <value>"
+         }
 
-            helpString += "\n"
+         helpString += "\n"
 
-            if (!argument.description.isEmpty()) {
-                helpString += "$tab$tab${argument.description}\n"
-            }
-        }
+         if (!argument.description.isEmpty()) {
+            helpString += "$tab$tab${argument.description}\n"
+         }
+      }
 
-        val positionalArgumentsConfig = this.positionalArguments
+      val positionalArgumentsConfig = this.positionalArguments
 
-        if (positionalArgumentsConfig != null) {
-            helpString += "\n"
-            helpString += "$tab<${positionalArgumentsConfig.name}>..."
+      if (positionalArgumentsConfig != null) {
+         helpString += "\n"
+         helpString += "$tab<${positionalArgumentsConfig.name}>..."
 
-            if (positionalArgumentsConfig.minCount != null) {
-                helpString += " (min ${positionalArgumentsConfig.minCount})"
-            }
+         if (positionalArgumentsConfig.minCount != null) {
+            helpString += " (min ${positionalArgumentsConfig.minCount})"
+         }
 
-            if (positionalArgumentsConfig.maxCount != null) {
-                helpString += " (max ${positionalArgumentsConfig.maxCount})"
-            }
+         if (positionalArgumentsConfig.maxCount != null) {
+            helpString += " (max ${positionalArgumentsConfig.maxCount})"
+         }
 
-            helpString += "\n"
+         helpString += "\n"
 
-            if (!positionalArgumentsConfig.description.isEmpty()) {
-                helpString += "$tab$tab${positionalArgumentsConfig.description}\n"
-            }
-        }
+         if (!positionalArgumentsConfig.description.isEmpty()) {
+            helpString += "$tab$tab${positionalArgumentsConfig.description}\n"
+         }
+      }
 
-        return helpString
-    }
+      return helpString
+   }
 }
 
 class InspectionPositionalArguments(
-        val name: String,
-        val description: String,
-        val minCount: Int?,
-        val maxCount: Int?
+      val name: String,
+      val description: String,
+      val minCount: Int?,
+      val maxCount: Int?
 )
